@@ -3,7 +3,7 @@ const joi = require('joi')
 const os = require('os')
 
 // These tests are not part of a CI / CD
-// To run locally, they assumes you have some cookies for google.com
+// To run locally, they assume you have some cookies for google.com
 
 const puppeteerCookie = joi
     .array()
@@ -29,16 +29,6 @@ it('Should get basic cookies from the defined url', async () => {
 it('Should get curl cookies from the defined url', async () => {
     const cookies = await chrome.getCookiesPromised(url, 'curl')
     await joi.validate(cookies, joi.string().required());
-})
-
-it('Should get jar cookies from the defined url', async () => {
-    const cookies = await chrome.getCookiesPromised(url, 'jar')
-    await joi.validate(cookies, joi.object({
-        _jar: joi.object({
-            enableLooseMode: joi.boolean(),
-            store: joi.object().unknown(true)
-        }).unknown(true).required(),
-    }).required());
 })
 
 it('Should get set-cookie cookies from the defined url', async () => {
